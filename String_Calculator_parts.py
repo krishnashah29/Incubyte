@@ -31,6 +31,13 @@ class Tests_StringCalculator(unittest.TestCase):
         self.assertRaises(Exception,StringCalculator.Add("-6"))
         self.assertRaises(Exception,StringCalculator.Add("-15,-6"))
         self.assertRaises(Exception,StringCalculator.Add("-15,-6,-1,-5"))
+    
+    #7. In StringCalculator Class
+    #8. Not applicable here as its for .Net only
+    #9.
+    def test_NumberBigger_1000(self):
+        self.assertEqual(StringCalculator.Add("//;#;\n1;#;2;#;3001"),3)
+        self.assertEqual(StringCalculator.Add("1,2,3001"),3)
 
 class StringCalculator():
     global numbers
