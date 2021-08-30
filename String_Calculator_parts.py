@@ -15,8 +15,14 @@ class Tests_StringCalculator(unittest.TestCase):
         self.assertEqual(StringCalculator.Add("4,5"),9)
         self.assertEqual(StringCalculator.Add("1,2,3"),6)
         self.assertEqual(StringCalculator.Add("1,2,3,4,5"),15)
+    
+     #3.
+    def test_NewLinesBetweenNumbers(self):
+        self.assertEqual(StringCalculator.Add("4\n5,6"),15)
 
 class StringCalculator():
+    global numbers
+    numbers=[]
     def Add(self):
         #Empty String 
         if self=="":
@@ -26,8 +32,11 @@ class StringCalculator():
         if len(self)==1:
             return int(self)
 
-        #NumbersWithComma
+        #NewLinesBetweenNumbers,NumbersWithComma
         if "," in self:
+            if "\n" in self:
+                return StringCalculator.NewLinesBetweenNumbers(self)
+            
             return sum(StringCalculator.ExtractNumbers(self))
 
     
@@ -35,5 +44,13 @@ class StringCalculator():
         numbers=self.split(',')
         numbers=[int(x) for x in numbers if int(x)<=1000]
         return numbers
+    
+    def NewLinesBetweenNumbers(self):
+
+        for x in self:
+            if x=="\n" or x==",":
+                continue
+            numbers.append(int(x))
+        return sum(numbers)
 if __name__=='__main__':
     unittest.main()
