@@ -1,4 +1,4 @@
-# Krishna Shah (18bce098)
+# Submitted by- Krishna Shah (18bce098)
 # Nirma Univeristy
 
 import unittest
@@ -141,21 +141,7 @@ class StringCalculator():
                 delimiters.append(temp)
                 temp=""
         return delimiters
-
-   
-   
-
-
-        
-
     
-            
-    
-
-
-
-
-        
 
 if __name__=='__main__':
     unittest.main()
