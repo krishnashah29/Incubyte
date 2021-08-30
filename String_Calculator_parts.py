@@ -19,6 +19,12 @@ class Tests_StringCalculator(unittest.TestCase):
      #3.
     def test_NewLinesBetweenNumbers(self):
         self.assertEqual(StringCalculator.Add("4\n5,6"),15)
+        
+    #4.,10.(Delimiter any length)
+    def test_DifferentDelimeters(self):
+        self.assertEqual(StringCalculator.Add("//;\n1;2;3"),6)
+        self.assertEqual(StringCalculator.Add("//##\n1##2##3##4##5"),15)
+        self.assertEqual(StringCalculator.Add("//;#;\n1;#;2;#;3"),6)
 
 class StringCalculator():
     global numbers
@@ -38,6 +44,10 @@ class StringCalculator():
                 return StringCalculator.NewLinesBetweenNumbers(self)
             
             return sum(StringCalculator.ExtractNumbers(self))
+        
+        #DifferentDelimiters
+        if self.startswith("//"):
+            return StringCalculator.MultipleDelimiters(self)
 
     
     def ExtractNumbers(self):
@@ -52,5 +62,14 @@ class StringCalculator():
                 continue
             numbers.append(int(x))
         return sum(numbers)
+    
+    def MultipleDelimiters(self):
+        
+        delimiters,numbers=self.split("\n",1)
+        numbers=numbers.split(delimiters[2:])
+        numbers=[int(x) for x in numbers if int(x)<=1000]
+        return sum(numbers)
+    
+    
 if __name__=='__main__':
     unittest.main()
