@@ -124,6 +124,7 @@ class StringCalculator():
             raise Exception(error_msg)
         except Exception:
             pass
+        
     def AddCalledCount(count):
         print("The AddCalledCount is-{0}".format(count))
     
