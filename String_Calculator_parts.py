@@ -39,6 +39,10 @@ class Tests_StringCalculator(unittest.TestCase):
         self.assertEqual(StringCalculator.Add("//;#;\n1;#;2;#;3001"),3)
         self.assertEqual(StringCalculator.Add("1,2,3001"),3)
 
+    #10.,11.,12.
+    def test_MultipleDelimiters(self):
+        self.assertEqual(StringCalculator.Add("//[***][%]\n1***2%3"),6)
+
 class StringCalculator():
     global numbers
     numbers=[]
@@ -51,7 +55,7 @@ class StringCalculator():
         if len(self)==1:
             return int(self)
 
-        #NewLinesBetweenNumbers,NumbersWithComma
+        #NewLinesBetweenNumbers,NumbersWithComma,ExceptionNegativeNumbers,NumberBigger_1000
         if "," in self:
             if "\n" in self:
                 return StringCalculator.NewLinesBetweenNumbers(self)
@@ -62,9 +66,11 @@ class StringCalculator():
             else:
                 return result
 
-        #DifferentDelimiters
+        #MultipleDelimiters and DifferentDelimiters
         if self.startswith("//"):
             return StringCalculator.MultipleDelimiters(self)
+        
+        StringCalculator.AddCalledCount(StringCalculator.addcount)
 
     
     def ExtractNumbers(self):
@@ -81,11 +87,37 @@ class StringCalculator():
         return sum(numbers)
     
     def MultipleDelimiters(self):
-        
-        delimiters,numbers=self.split("\n",1)
-        numbers=numbers.split(delimiters[2:])
-        numbers=[int(x) for x in numbers if int(x)<=1000]
-        return sum(numbers)
+        if self[2]!="[":
+            delimiters,numbers=self.split("\n",1)
+            numbers=numbers.split(delimiters[2:])
+            numbers=[int(x) for x in numbers if int(x)<=1000]
+            return sum(numbers)
+        else:
+            delimiters=StringCalculator.GetDelimiters(self)
+            temp=self.split("\n",1)
+            numbers=[]
+            for d in delimiters:
+                temp=temp[1].split(d)
+                numbers.append(temp[0])
+                numbers.append(temp[1])
+            numbers=[int(x) for x in numbers if x.isdigit()]      
+            return sum(numbers)
+
+
+    def GetDelimiters(self):
+        delimiters=[]
+        temp=""
+        for x in range(len(self)):
+            if self[x]=="[":
+                temp+=self[x+1]
+                i=x+2
+                while self[i]!="]" and i<=len(self):
+                    temp+=self[i]
+                    i+=1
+                delimiters.append(temp)
+                temp=""
+        return delimiters
+    
     def Error(self):
         try:
             Nnums=[x for x in self if x<'0']

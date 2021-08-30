@@ -63,8 +63,11 @@ class StringCalculator():
         if len(self)==1:
             return int(self)
 
-        #NewLinesBetweenNumbers,NumbersWithComma,ExceptionNegativeNumbers,NumberBigger_1000
-        if "," in self:
+                #MultipleDelimiters and DifferentDelimiters
+        if self.startswith("//"):
+            return StringCalculator.MultipleDelimiters(self)
+        
+        StringCalculator.AddCalledCount(StringCalculator.addcount)
             if "\n" in self:
                 return StringCalculator.NewLinesBetweenNumbers(self)
             
