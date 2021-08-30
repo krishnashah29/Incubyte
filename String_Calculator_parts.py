@@ -45,7 +45,7 @@ class StringCalculator():
     global numbers
     numbers=[]
     def Add(self):
-        #Empty String 
+
         if self=="":
             return 0
         
