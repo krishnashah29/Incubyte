@@ -1,4 +1,4 @@
-# Incubyte- FullSatckDevelopment
+# Incubyte- FullStackDevelopment
 Kata- String Calculator
 
 The Below are the Specification for the Kata -String Calculator
